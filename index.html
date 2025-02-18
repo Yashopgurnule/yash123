@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+
+    <style>
+        #button {
+            background-color: rgb(203, 223, 17);
+            color: white;
+        }
+        .cartlist ul {
+            padding: 0;
+        }
+        .cartlist li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        .remove-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 3px 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="productlist">
+        <div class="product"><span>Product1 - Rs.100</span><button onclick="Addtocart('Product1 - Rs.100')">Add to cart</button></div>
+        <div class="product"><span>Product2 - Rs.200</span><button onclick="Addtocart('Product2 - Rs.200')">Add to cart</button></div>
+        <div class="product"><span>Product3 - Rs.300</span><button onclick="Addtocart('Product3 - Rs.300')">Add to cart</button></div>
+    </div>
+
+    <div class="cartlist">
+        <ul id="cartItems" type="none"></ul>
+        <p><strong>Total: Rs. <span id="totalPrice">0</span></strong></p>
+    </div>
+
+    <div class="clearcart">
+        <button onclick="clearCart()" id="button">Clear Content</button>
+    </div>
+
+    <script>
+        let totalAmount = 0;
+
+        function Addtocart(product) {
+            let ul = document.getElementById("cartItems");
+            
+            
+            let price = parseInt(product.match(/\d+/)[0]); 
+
+            let li = document.createElement("li");
+            li.textContent = product;
+
+            let removeBtn = document.createElement("button");
+            removeBtn.textContent = "Remove";
+            removeBtn.className = "remove-btn";
+            removeBtn.onclick = function() {
+                li.remove();
+                updateTotal(-price);
+            };
+
+            
+            li.appendChild(removeBtn);
+            ul.appendChild(li);
+
+            updateTotal(price);
+        }
+
+        function updateTotal(amount) {
+            totalAmount += amount;
+            document.getElementById("totalPrice").textContent = totalAmount;
+        }
+
+        function clearCart() {
+            document.getElementById("cartItems").innerHTML = "";
+            totalAmount = 0;
+            document.getElementById("totalPrice").textContent = totalAmount;
+        }
+    </script>
+
+</body>
+</html>
